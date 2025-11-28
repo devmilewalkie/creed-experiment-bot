@@ -3,7 +3,7 @@ name: CREED experiment checker
 on:
   schedule:
     # Every 10 minutes
-    - cron: "*/10 * * * *"
+    - cron: "*/30 * * * *"
   workflow_dispatch: {}
 
 jobs:
