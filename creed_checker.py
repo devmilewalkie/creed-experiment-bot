@@ -101,8 +101,8 @@ def send_discord_message(content: str):
 
 def run_once():
     """
-    One-shot run: login, check once, notify if sessions are available.
-    Perfect for GitHub Actions or cron.
+    One-shot run: login, check once, notify whether sessions are available
+    or not. Works perfectly with GitHub Actions.
     """
     with requests.Session() as session:
         if not login(session):
@@ -111,15 +111,24 @@ def run_once():
 
         try:
             available = check_experiments(session)
+
             if available:
                 print("[+] Sessions available! Sending Discord notification.")
                 send_discord_message(
                     "🚨 New CREED sessions are available – go sign up!"
                 )
             else:
-                print("[*] No sessions available (still 'No sessions found.').")
+                print("[*] No sessions available.")
+                send_discord_message(
+                    "ℹ️ No CREED sessions available at the moment."
+                )
+
         except Exception as e:
             print(f"[!] Error during check: {e}")
+            send_discord_message(
+                f"⚠️ An error occurred while checking CREED sessions: {e}"
+            )
+
 
 
 if __name__ == "__main__":
